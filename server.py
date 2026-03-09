@@ -1,4 +1,4 @@
-from flask import Flask, send_file, request
+from flask import Flask, send_from_directory, request
 import os
 
 app = Flask(__name__)
@@ -6,8 +6,8 @@ app = Flask(__name__)
 current_sound = ""
 
 @app.route("/")
-def home():
-    return send_file("index.html")
+def overlay():
+    return send_from_directory(".", "index.html")
 
 @app.route("/sound")
 def sound():
@@ -24,7 +24,7 @@ def redeem():
 
 @app.route("/<path:file>")
 def serve_file(file):
-    return send_file(file)
+    return send_from_directory(".", file)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
