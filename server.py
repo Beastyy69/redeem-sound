@@ -6,15 +6,15 @@ app = Flask(__name__)
 current_sound = ""
 
 @app.route("/")
-def overlay():
+def home():
     return send_file("index.html")
 
 @app.route("/sound")
 def sound():
     global current_sound
-    sound = current_sound
+    s = current_sound
     current_sound = ""
-    return sound
+    return s
 
 @app.route("/redeem")
 def redeem():
@@ -22,9 +22,9 @@ def redeem():
     current_sound = request.args.get("sound","")
     return "ok"
 
-@app.route("/<filename>")
-def get_file(filename):
-    return send_file(filename)
+@app.route("/<path:file>")
+def serve_file(file):
+    return send_file(file)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
