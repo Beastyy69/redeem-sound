@@ -11,13 +11,20 @@ def overlay():
 
 @app.route("/sound")
 def sound():
-    return current_sound
+    global current_sound
+    sound = current_sound
+    current_sound = ""
+    return sound
 
 @app.route("/redeem")
 def redeem():
     global current_sound
     current_sound = request.args.get("sound","")
     return "ok"
+
+@app.route("/<filename>")
+def get_file(filename):
+    return send_file(filename)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
