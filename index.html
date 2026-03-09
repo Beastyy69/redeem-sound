@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<audio id="player"></audio>
+
+<script>
+
+let lastSound="";
+
+async function check(){
+
+let res = await fetch("/sound");
+let sound = await res.text();
+
+if(sound !== lastSound && sound !== ""){
+
+document.getElementById("player").src = sound + ".mp3";
+document.getElementById("player").play();
+
+lastSound = sound;
+
+}
+
+}
+
+setInterval(check,1000);
+
+</script>
+
+</body>
+</html>
